@@ -102,16 +102,33 @@ class Table extends Component {
             <ul key={item.objectID}>
               {listItem(item)}
             </ul>
-            <button
-              onClick={() => onDismiss(item.objectID)}
-              type="button"
-            >
+            <Button onClick={() => onDismiss(item.objectID)}>
               Dismiss
-            </button>
+            </Button>
           </div>
         )}
       </div>
     )
+  }
+}
+
+class Button extends Component {
+  render() {
+    const {
+      onClick,
+      className = '',
+      children,
+    } = this.props;
+
+    return (
+      <button
+        onClick={onClick}
+        className={className}
+        type="button"
+      >
+        {children}
+      </button>
+    );
   }
 }
 

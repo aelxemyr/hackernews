@@ -27,15 +27,20 @@ class App extends Component {
     this.state = {
       header: 'This is the Title',
       list,
+      searchTerm: '',
     };
-
-    this.onDismiss = this.onDismiss.bind(this);
   }
 
-  onDismiss(id) {
+  onDismiss = id => {
     const updatedList = this.state.list.filter(item => item.objectID !== id);
     this.setState({ list: updatedList });
   }
+
+  onSearchChange = event =>
+    this.setState({ searchTerm: event.target.value });
+
+  isSearched = searchTerm => item =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
   render() {
     const listItem = item => (
@@ -52,19 +57,26 @@ class App extends Component {
     return (
       <div className="App">
         <h1 style={{ textAlign: 'center' }}>{this.state.header}</h1>
-        {this.state.list.map(item => (
+        <form>
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={this.onSearchChange}
+          />
+        </form>
+        {this.state.list.filter(
+          this.isSearched(this.state.searchTerm)
+        ).map(item => (
           <div>
             <ul key={item.objectID}>
               {listItem(item)}
             </ul>
-            <span>
-              <button
-                onClick={() => this.onDismiss(item.objectID)}
-                type="button"
-              >
-                Dismiss
-              </button>
-            </span>
+            <button
+              onClick={() => this.onDismiss(item.objectID)}
+              type="button"
+            >
+              Dismiss
+            </button>
           </div>
         ))}
       </div>

@@ -4,15 +4,22 @@ import './App.css';
 
 class App extends Component {
   render() {
+    const user = {
+      firstName: 'Alex',
+      lastName: 'Myers',
+      userName: 'aelxemyr',
+    };
+    const printObject = (obj) => {
+      Object.keys(obj).map(key => `My ${key} is ${obj[key]}`)
+                      .reduce((acc, cur) => acc + "\n" + cur)
+                      .toString()
+    };
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>{Object.keys(user).map(key => `my ${key} is ${user[key]}`)
+          .reduce((acc, cur) => acc + " and " + cur)
+          .toString()}</p>
       </div>
     );
   }

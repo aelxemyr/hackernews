@@ -43,14 +43,16 @@ class App extends Component {
     const { header, searchTerm, list } = this.state;
 
     return (
-      <div className="App">
-        <h1>{header}</h1>
-        <Search
-          value={searchTerm}
-          onChange={this.onSearchChange}
-        >
-          Search:
-        </Search>
+      <div className="page">
+        <div className="interactions">
+          <h1>{header}</h1>
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}
+          >
+            Search:
+          </Search>
+        </div>
         <Table
           list={list}
           pattern={searchTerm}
@@ -75,27 +77,24 @@ const Table = ({ list, pattern, onDismiss }) => {
   const isSearched = searchTerm => item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-  const listItem = item => (
-    <div>
-      <li>
-        <a href={item.url}>{item.title}</a>
-      </li>
-      <li>{item.author}</li>
-      <li>{item.num_comments}</li>
-      <li>{item.points}</li>
-    </div>
-  );
-
   return (
-    <div>
+    <div className="table">
       {list.filter(isSearched(pattern)).map(item =>
-        <div>
-          <ul key={item.objectID}>
-            {listItem(item)}
-          </ul>
-          <Button onClick={() => onDismiss(item.objectID)}>
-            Dismiss
-          </Button>
+        <div key={item.objectID} className="table-row">
+          <span style={{ width: '40%' }}>
+            <a href={item.url}>{item.title}</a>
+          </span>
+          <span style={{ width: '30%' }}>{item.author}</span>
+          <span style={{ width: '10%' }}>{item.num_comments}</span>
+          <span style={{ width: '10%' }}>{item.points}</span>
+          <span style={{ width: '10%' }}>
+            <Button
+              onClick={() => onDismiss(item.objectID)}
+              className="button-inline"
+            >
+              Dismiss
+            </Button>
+          </span>
         </div>
       )}
     </div>

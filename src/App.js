@@ -61,75 +61,54 @@ class App extends Component {
   }
 }
 
-class Search extends Component {
-  render() {
-    const { value, onChange, children } = this.props;
-    return (
-      <form>
-        {children} <input
-          type="text"
-          value={value}
-          onChange={onChange}
-        />
-      </form>
-    );
-  }
-}
+const Search = ({ value, onChange, children }) =>
+  <form>
+    {children} <input
+      type="text"
+      value={value}
+      onChange={onChange}
+    />
+  </form>
 
-class Table extends Component {
+const Table = ({ list, pattern, onDismiss }) => {
 
-  isSearched = searchTerm => item =>
+  const isSearched = searchTerm => item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-  render() {
-    const { list, pattern, onDismiss } = this.props;
+  const listItem = item => (
+    <div>
+      <li>
+        <a href={item.url}>{item.title}</a>
+      </li>
+      <li>{item.author}</li>
+      <li>{item.num_comments}</li>
+      <li>{item.points}</li>
+    </div>
+  );
 
-    const listItem = item => (
-      <div>
-        <li>
-          <a href={item.url}>{item.title}</a>
-        </li>
-        <li>{item.author}</li>
-        <li>{item.num_comments}</li>
-        <li>{item.points}</li>
-      </div>
-    );
-
-    return (
-      <div>
-        {list.filter(this.isSearched(pattern)).map(item =>
-          <div>
-            <ul key={item.objectID}>
-              {listItem(item)}
-            </ul>
-            <Button onClick={() => onDismiss(item.objectID)}>
-              Dismiss
-            </Button>
-          </div>
-        )}
-      </div>
-    )
-  }
+  return (
+    <div>
+      {list.filter(isSearched(pattern)).map(item =>
+        <div>
+          <ul key={item.objectID}>
+            {listItem(item)}
+          </ul>
+          <Button onClick={() => onDismiss(item.objectID)}>
+            Dismiss
+          </Button>
+        </div>
+      )}
+    </div>
+  );
 }
 
-class Button extends Component {
-  render() {
-    const {
-      onClick,
-      className = '',
-      children,
-    } = this.props;
-
-    return (
-      <button
-        onClick={onClick}
-        className={className}
-        type="button"
-      >
-        {children}
-      </button>
-    );
-  }
-}
+const Button = ({ onClick, className = '', children }) =>
+  <button
+    onClick={onClick}
+    className={className}
+    type="button"
+  >
+    {children}
+  </button>
 
 export default App;

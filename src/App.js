@@ -2,24 +2,45 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const list = [
+  {
+    title: 'React',
+    url: 'https://facebook.github.io/react/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://github.com/reactjs/redux',
+    author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+];
+
+const listItem = item => (
+  <div>
+    <li>
+      <a href={item.url}>{item.title}</a>
+    </li>
+    <li>{item.author}</li>
+    <li>{item.num_comments}</li>
+    <li>{item.points}</li>
+  </div>
+)
+
 class App extends Component {
   render() {
-    const user = {
-      firstName: 'Alex',
-      lastName: 'Myers',
-      userName: 'aelxemyr',
-    };
-    const printObject = (obj) => {
-      Object.keys(obj).map(key => `My ${key} is ${obj[key]}`)
-                      .reduce((acc, cur) => acc + "\n" + cur)
-                      .toString()
-    };
     return (
       <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{Object.keys(user).map(key => `my ${key} is ${user[key]}`)
-          .reduce((acc, cur) => acc + " and " + cur)
-          .toString()}</p>
+        {list.map(item =>
+          <ul key={item.objectID}>
+            {listItem(item)}
+          </ul>
+        )}
       </div>
     );
   }

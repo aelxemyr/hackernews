@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fetch from 'isomorphic-fetch';
 import './App.css';
 
 const DEFAULT_QUERY = 'elm';
@@ -109,7 +110,7 @@ class App extends Component {
             onChange={this.onSearchChange}
             onSubmit={this.onSearchSubmit}
           >
-            Search:
+            Search!
           </Search>
         </div>
         { error
@@ -186,3 +187,9 @@ const Button = ({ onClick, className = '', children }) =>
   </button>
 
 export default App;
+
+export {
+  Button,
+  Search,
+  Table,
+};
